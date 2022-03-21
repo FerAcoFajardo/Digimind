@@ -11,6 +11,7 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.google.gson.Gson
 
 class TaskAdapter : BaseAdapter {
     lateinit var context: Context
@@ -35,23 +36,25 @@ class TaskAdapter : BaseAdapter {
         return position.toLong()
     }
     fun delete(task: Task){
-        val alertDialog: AlertDialog.Builder = context?.let{
+        val alertDialog: AlertDialog? = context?.let{
             val builder = AlertDialog.Builder(it)
             builder.apply {
                 setPositiveButton(R.string.ok_button,
-                DialogInterface.OnClickListener { dialog, id ->
+                    DialogInterface.OnClickListener { dialog, id ->
                         HomeFragment.taskList.remove(task)
+                        saveJson()
                         HomeFragment.adapter.notifyDataSetChanged()
                         Toast.makeText(context, R.string.msg_deleted, Toast.LENGTH_SHORT).show()
                     })
                 setNegativeButton(R.string.cancel_button,
-                    DialogInterface.OnClickListener { dialog, id ->
-
-                    })
+                    DialogInterface.OnClickListener { dialog, id -> }
+                )
             }
             builder?.setMessage(R.string.msg)
                 .setTitle(R.string.title)
+            builder.create()
         }
+        alertDialog?.show()
     }
 
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
@@ -73,5 +76,16 @@ class TaskAdapter : BaseAdapter {
 
 
         return taskView
+    }
+
+    private fun saveJson(){
+        val preferences = context?.getSharedPreferences("preferences", Context.MODE_PRIVATE)
+        val editor = preferences?.edit()
+
+        val gson = Gson()
+
+        var json = gson.toJson(HomeFragment.taskList)
+        editor?.putString("taskList", json)
+        editor?.apply()
     }
 }

@@ -12,7 +12,9 @@ import acosta.fernando.digimind.databinding.FragmentDashboardBinding
 import acosta.fernando.digimind.ui.Task
 import acosta.fernando.digimind.ui.home.HomeFragment
 import android.app.TimePickerDialog
+import android.content.Context
 import android.widget.Toast
+import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -63,6 +65,19 @@ class DashboardFragment : Fragment() {
         var tarea = Task(title, day, date)
         HomeFragment.taskList.add(tarea)
         Toast.makeText(context,"Task added successfully", Toast.LENGTH_SHORT).show()
+
+        saveJson()
+    }
+
+    fun saveJson(){
+        val preferences = context?.getSharedPreferences("preferences", Context.MODE_PRIVATE)
+        val editor = preferences?.edit()
+
+        val gson = Gson()
+
+        var json = gson.toJson(HomeFragment.taskList)
+        editor?.putString("taskList", json)
+        editor?.apply()
     }
 
     // Set time function

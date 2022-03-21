@@ -10,6 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import acosta.fernando.digimind.databinding.FragmentHomeBinding
 import acosta.fernando.digimind.ui.Task
 import acosta.fernando.digimind.ui.TaskAdapter
+import android.content.Context
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class HomeFragment : Fragment() {
 
@@ -39,10 +42,12 @@ class HomeFragment : Fragment() {
         // Get the view using the binding.
         val gridView = binding.gridview
 
-        if(first){
-            fillTasks()
-            first = false
-        }
+//        if(first){
+//            fillTasks()
+//            first = false
+//        }
+
+        loadTasks()
 
 
         adapter = TaskAdapter(root.context, taskList)
@@ -64,6 +69,19 @@ class HomeFragment : Fragment() {
         taskList.add(Task("Task 9", "Monday", "10:00"))
 
 
+    }
+
+    fun loadTasks(){
+        val preferences = context?.getSharedPreferences("preferences", Context.MODE_PRIVATE)
+        val gson = Gson()
+        taskList = ArrayList<Task>()
+
+        var json = preferences?.getString("taskList", null)
+        val type = object :
+            TypeToken<ArrayList<Task?>?>() {}.type
+        if(json != null){
+            taskList = gson.fromJson(json, type)
+        }
     }
 
     override fun onDestroyView() {
