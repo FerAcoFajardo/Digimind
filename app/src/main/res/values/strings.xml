@@ -1,6 +1,25 @@
 <resources>
     <string name="app_name">Digimind</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_home">Dashboard</string>
+    <string name="title_dashboard">New Task</string>
     <string name="title_notifications">Notifications</string>
+    <string name="question1">Task name</string>
+    <string name="question2">Due date</string>
+    <string name="question3">Due time</string>
+    <string name="day1">Monday</string>
+    <string name="day2">Tuesday</string>
+    <string name="day3">Wednesday</string>
+    <string name="day4">Thursday</string>
+    <string name="day5">Friday</string>
+    <string name="day6">Saturday</string>
+    <string name="day7">Sunday</string>
+    <string name="time">HOUR</string>
+    <string name="add">ADD</string>
+    <string name="hint_title">Digimind</string>
+    <string name="new_task">New task added</string>
+    <string name="ok_button">Delete</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="title">Advise</string>
+    <string name="msg">Do you really want to delete the task?</string>
+    <string name="msg_deleted">Task deleted successfully</string>
 </resources>
